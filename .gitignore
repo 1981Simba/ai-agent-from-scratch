@@ -1,0 +1,6 @@
+.env
+agent_env/
+__pycache__/
+notes.txt
+notes_test.txt
+.vscode/
