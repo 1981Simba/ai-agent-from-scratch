@@ -41,6 +41,10 @@ Agent: 1234 x 56 = 69,104.
 You: Save that result as a note.
 [tool] save_note {'text': '1234 x 56 = 69,104'}
 Agent: Done! I saved it to notes.txt.
+You: Save these results to a note.
+[tool] save_note {'text': 'Time: 2026-11-24 01:00:05; 10 x 10 = 100'}
+Agent: I saved this note: "Time: 2026-11-24 01:00:05; 10 x 10 = 100".
+You: exit 
 ```
 
 ## Safety choices

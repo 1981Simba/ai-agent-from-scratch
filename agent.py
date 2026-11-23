@@ -31,7 +31,20 @@ def save_note(text):
         f.write(text + "\n")
     return "Note saved."
 
+# Define the function
+def count_words(text):
+    return len(text.split())
+
 tools = [
+   {
+        "name": "count_words",
+        "description": "Count the words in a piece of text. Use this whenever the user asks how many words something has.",
+        "input_schema": {
+            "type": "object",
+            "properties": {"text": {"type": "string"}},
+            "required": ["text"],
+        },
+    },
     {
         "name": "get_time",
         "description": "Get the current local date and time. Use this whenever the user asks about today's date or the time.",
@@ -68,8 +81,14 @@ def run_tool(name, args):
     if name == "calculate":
         return calculate(**args)
     if name == "save_note":
+        answer = input(f"Save note '{args['text']}'? (y/n): ")
+        if answer.strip().lower() != "y":
+            return "The user declined. The note was not saved."
         return save_note(**args)
+    if name == "count_words":
+        return count_words(**args)
     return "Error: unknown tool"
+    
 
 
 def run_agent(messages):
@@ -77,7 +96,9 @@ def run_agent(messages):
         response = client.messages.create(
             model=MODEL,
             max_tokens=1024,
-            system="You are a helpful assistant. Use tools.",
+            system=("You are Tafara, a calm, precise assistant who explains things plainly. "
+                "Always use a tool for maths, dates and saving notes; never guess. "
+                "Keep answers to two sentences unless asked for more."),
             tools=tools,
             messages=messages,
         )
